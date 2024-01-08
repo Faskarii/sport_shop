@@ -1,0 +1,68 @@
+<footer id="footer"><!--Footer-->
+
+    <script type="text/javascript">
+        !function(){var i="G4M9cN",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
+      </script>
+      
+    <div class="footer-Before" style="display: flex; justify-content: center;">
+        <span style="    text-align: center;">
+        بهترین لوازم ورزشی از ما بخواهید
+    </span>
+    </div>
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="address">
+                        <img src="/static/images/home/map.png" alt=""/>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="address">
+                        <img src="/static/images/home/map.png" alt=""/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="companyinfo">
+                        <h2>{{ site_setting.site_name }}</h2>
+                        <h4>درباره ما :</h4>
+                        <p>{{ site_setting.about_us_text }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-widget">
+        <div class="container">
+            <div class="row">
+                {% for footer_link_box in footer_link_boxes %}
+                    <div class="col-sm-3 pull-right">
+                        <div class="single-widget">
+                            <h2>{{ footer_link_box.title }}</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                {% for link in footer_link_box.footerlink_set.all %}
+                                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom" style="direction: ltr !important;">
+        <div class="container">
+            <div class="row">
+                <p class="pull-right">
+                    {{ site_setting.copy_right }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer><!--/Footer-->

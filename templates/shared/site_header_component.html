@@ -1,0 +1,55 @@
+<header id="header">
+  <!-- header -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+  <div class="flex items-center flex-row-reverse justify-between pl-5">
+    <!-- header-bottom -->
+    <ul class="nav navbar-nav">
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser %}
+          <li>
+            <a href="/admin"><i class="fa fa-user"></i> پنل ادمین</a>
+          </li>
+        {% endif %}
+        <li>
+          <a href="{% url 'user_basket_page' %}"><i class="fa fa-shopping-cart"></i> سبد خرید</a>
+        </li>
+        <li>
+          <a href="{% url 'user_panel_dashboard' %}"><i class="fa fa-user"></i> پنل کاربری</a>
+        </li>
+        <li>
+          <a href="{% url 'logout_page' %}"><i class="fa fa-sign-out"></i> خروج</a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{% url 'register_page' %}"><i class="fa fa-user-plus"></i> ثبت نام</a>
+        </li>
+        <li>
+          <a href="{% url 'login_page' %}"><i class="fa fa-sign-in"></i> ورود</a>
+        </li>
+      {% endif %}
+    </ul>
+    <ul class="flex items-center justify-start gap-5 px-10">
+      <li>
+        <a style="width: 100px" href="index.html"><img src="{{ site_setting.site_logo.url }}" alt="Logo" style="text-align: center; width: 50px" /></a>
+      </li>
+      <li>
+        <a href="{% url 'home_page' %}" class="{% if request.resolver_match.url_name == 'home_page' %}{% endif %}" style="font-size: 17px;">خـانه</a>
+      </li>
+      <li>
+        <a class="{% if request.resolver_match.url_name == 'product-list' %}{% endif %}" href="{% url 'product-list' %}" style="font-size: 17px;">محصولات</a>
+      </li>
+      <li>
+        <a class="{% if request.resolver_match.url_name == 'articles_list' %}{% endif %}" href="{% url 'articles_list' %}" style="font-size: 17px;">مقالات</a>
+      </li>
+      <li>
+        <a class="{% if request.resolver_match.url_name == 'about_page' %}{% endif %}" href="{% url 'about_page' %}" style="font-size: 17px;">درباره مـا</a>
+      </li>
+      <li>
+        <a class="{% if request.resolver_match.url_name == 'contact_us_page' %}{% endif %}" href="{% url 'contact_us_page' %}" style="font-size: 17px;">تماس با مـا</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /header-bottom -->
+</header>
+<!-- /header -->

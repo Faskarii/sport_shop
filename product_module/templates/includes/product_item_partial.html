@@ -1,0 +1,39 @@
+{% load thumbnail %}
+{% load poll_extras %}
+
+
+{% block footer_references %}
+    <script src="/static/lib/image-lightbox/js/lightbox.min.js"></script>
+    {#    <script src="/static/lib/image-lightbox/js/lightbox-plus-jquery.min.js"></script>#}
+{% endblock %}
+
+<div class="col-sm-{{ col_size }}">
+    <div class="product-image-wrapper">
+        <div class="single-products">
+            <div class="productinfo text-center">
+                {% if product.image %}
+                    {% thumbnail product.image "268x250" quality=90 crop='center' as im %}
+                        <img style="width: 250px; height: 250px;" src="{{ im.url }}">
+                    {% endthumbnail %}
+                {% else %}
+                    <img src="/static/images/shop/product.jpg" alt="">
+                {% endif %}
+                <h3 style="font-size: 20px; padding: 10px 0 10px 0;">{{ product.price|three_digits_currency }}</h3>
+                <p style="font-size: 12px;">{{ product.title }}</p>
+                <br>
+                <button  onclick="addProductToOrder({{ product.id }})" class="btn btn-default add-to-cart"><i
+                        class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+            </div>
+        </div>
+        <div class="choose">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <a href="{{ product.get_absolute_url }}">
+                        <i class="fa fa-plus-square"></i>
+                        مشاهده جزییات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
