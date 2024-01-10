@@ -5,7 +5,7 @@ from . import models
 # Register your models here.
 
 class ProductAdmin(admin.ModelAdmin):
-    list_filter = ['category', 'is_active']
+    list_filter = ['category', 'is_active', 'size']
     list_display = ['title', 'price', 'is_active', 'is_delete']
     list_editable = ['price', 'is_active']
 
@@ -16,3 +16,4 @@ admin.site.register(models.ProductTag)
 admin.site.register(models.ProductBrand)
 admin.site.register(models.ProductVisit)
 admin.site.register(models.ProductGallery)
+admin.site.register(models.ProductSize)

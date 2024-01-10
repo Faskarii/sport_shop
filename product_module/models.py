@@ -1,9 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from account_module.models import User
+from django.utils.text import slugify
 
-
-# Create your models here.
 
 class ProductCategory(models.Model):
     title = models.CharField(max_length=300, db_index=True, verbose_name='عنوان')
@@ -13,7 +12,7 @@ class ProductCategory(models.Model):
 
     def __str__(self):
         return f'( {self.title} - {self.url_title} )'
-
+    
     class Meta:
         verbose_name = 'دسته بندی'
         verbose_name_plural = 'دسته بندی ها'
@@ -32,9 +31,23 @@ class ProductBrand(models.Model):
         return self.title
 
 
+class ProductSize(models.Model):
+    title = models.CharField(max_length=5, verbose_name='سایز' , db_index=True)
+    url_title = models.CharField(unique=True, max_length=30, verbose_name='نام در url', db_index=True)
+    is_active = models.BooleanField(verbose_name='فعال / غیرفعال')
+
+    class Meta:
+        verbose_name = 'سایز'
+        verbose_name_plural = 'سایز ها'
+
+    def __str__(self):
+        return self.title
+
+
 class Product(models.Model):
     title = models.CharField(max_length=300, verbose_name='نام محصول')
     category = models.ManyToManyField(ProductCategory, related_name='product_categories', verbose_name='دسته بندی ها')
+    size = models.ManyToManyField(ProductSize, related_name='product_size', verbose_name='سایز')
     image = models.ImageField(upload_to='images/products', null=True, blank=True, verbose_name='تصویر محصول')
     brand = models.ForeignKey(ProductBrand, on_delete=models.CASCADE, verbose_name='برند', null=True, blank=True)
     price = models.IntegerField(verbose_name='قیمت')
@@ -48,7 +61,7 @@ class Product(models.Model):
         return reverse('product-detail', args=[self.slug])
 
     def save(self, *args, **kwargs):
-        # self.slug = slugify(self.title)
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):

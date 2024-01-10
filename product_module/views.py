@@ -31,6 +31,7 @@ class ProductListView(ListView):
         query = super(ProductListView, self).get_queryset()
         category_name = self.kwargs.get('cat')
         brand_name = self.kwargs.get('brand')
+        size = self.kwargs.get('size')
         request: HttpRequest = self.request
         start_price = request.GET.get('start_price')
         end_price = request.GET.get('end_price')
@@ -45,6 +46,8 @@ class ProductListView(ListView):
 
         if category_name is not None:
             query = query.filter(category__url_title__iexact=category_name)
+        if size is not None:
+            query = query.filter(size__url_title__iexact=size)
         return query
 
 

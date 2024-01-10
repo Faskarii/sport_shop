@@ -8,4 +8,4 @@ pytz
 sorl-thumbnail
 sqlparse
 typing-extensions
-widget_tweaks
+requests
