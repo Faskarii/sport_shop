@@ -7,7 +7,7 @@ from django.utils.text import slugify
 class ProductCategory(models.Model):
     title = models.CharField(max_length=300, db_index=True, verbose_name='عنوان')
     url_title = models.CharField(max_length=300, db_index=True, verbose_name='عنوان در url')
-    is_active = models.BooleanField(verbose_name='فعال / غیرفعال')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
     is_delete = models.BooleanField(verbose_name='حذف شده / نشده')
 
     def __str__(self):
@@ -21,7 +21,7 @@ class ProductCategory(models.Model):
 class ProductBrand(models.Model):
     title = models.CharField(max_length=300, verbose_name='نام برند', db_index=True)
     url_title = models.CharField(max_length=300, verbose_name='نام در url', db_index=True)
-    is_active = models.BooleanField(verbose_name='فعال / غیرفعال')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
 
     class Meta:
         verbose_name = 'برند'
@@ -34,7 +34,7 @@ class ProductBrand(models.Model):
 class ProductSize(models.Model):
     title = models.CharField(max_length=5, verbose_name='سایز' , db_index=True)
     url_title = models.CharField(unique=True, max_length=30, verbose_name='نام در url', db_index=True)
-    is_active = models.BooleanField(verbose_name='فعال / غیرفعال')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
 
     class Meta:
         verbose_name = 'سایز'
@@ -43,6 +43,18 @@ class ProductSize(models.Model):
     def __str__(self):
         return self.title
 
+
+class Productcolor(models.Model):
+    title = models.CharField(max_length=50, verbose_name='رنگ' , db_index=True)
+    url_title = models.CharField(unique=True, max_length=30, verbose_name='نام در url', db_index=True)
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
+
+    class Meta:
+        verbose_name = 'رنگ'
+        verbose_name_plural = 'رنگ ها'
+
+    def __str__(self):
+        return self.title
 
 class Product(models.Model):
     title = models.CharField(max_length=300, verbose_name='نام محصول')
@@ -54,8 +66,9 @@ class Product(models.Model):
     short_description = models.CharField(max_length=360, db_index=True, null=True, verbose_name='توضیحات کوتاه')
     description = models.TextField(verbose_name='توضیحات اصلی', db_index=True)
     slug = models.SlugField(default="", null=False, db_index=True, blank=True, max_length=200, unique=True, verbose_name='عنوان در url')
-    is_active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
     is_delete = models.BooleanField(verbose_name='حذف شده / نشده')
+    color = models.ManyToManyField(Productcolor, related_name='product_color', verbose_name='رنگ')
 
     def get_absolute_url(self):
         return reverse('product-detail', args=[self.slug])
